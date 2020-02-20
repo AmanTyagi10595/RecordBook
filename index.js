@@ -7,7 +7,7 @@ const Error = require('./error/error');
 const app = express();
 
 // connect to mongodb
-mongoose.connect('mongodb://localhost/AssetsManag');
+mongoose.connect('mongodb://localhost/RecordBook');
 mongoose.Promise = global.Promise;
 
 // use body-parser middleware
@@ -17,6 +17,7 @@ app.use(require('body-parser').urlencoded({ extended: true }));
 // initialize routes
 
 app.use('/building', require('./routes/Building'));
+app.use('/owner', require('./routes/Owner'));
 
 // error handling middleware
 app.use(function (err, req, res, next) {
