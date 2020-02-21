@@ -86,12 +86,43 @@ const CustomerSchema = new Schema({
     }
 });
 
+const SaleRecordSchema = new Schema({
+    name: {
+        type: String,
+        required: [true, 'Name field is required']
+    },
+    mo_num: {
+        type: Number,
+        required: [true, 'Mobile number is required'],
+    },
+    email: {
+        type: String
+    },
+    image_url: {
+        type: String
+    },
+    amount: {
+        type: Number
+    },
+    sale_date: {
+        type: Date
+    },
+    promis_date: {
+        type: Date
+    },
+    notification: {
+        type: Boolean
+    }
+});
+
 const Ninja = mongoose.model('ninja', NinjaSchema);
 const Building = mongoose.model('Building', BuildingSchema);
 const Owner = mongoose.model('Owner', OwnerSchema);
 const Customer = mongoose.model('Customer', CustomerSchema);
+const SaleRecord = mongoose.model('SaleRecord', SaleRecordSchema);
 
 module.exports.Ninja = Ninja;
 module.exports.Building = Building;
 module.exports.Owner = Owner;
 module.exports.Customer = Customer;
+module.exports.SaleRecord = SaleRecord;
