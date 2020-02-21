@@ -5,7 +5,7 @@ const ownerController = require('../controllers/owner/owner.controller');
 router.get('/', ownerController.getOwner);
 
 // Get single Owner
-router.get('/:id', ownerController.getSingleOwner);
+router.get('/:email', ownerController.getSingleOwner);
 
 // Add Owner
 router.post('/add', ownerController.addOwner);

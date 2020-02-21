@@ -18,6 +18,7 @@ app.use(require('body-parser').urlencoded({ extended: true }));
 
 app.use('/building', require('./routes/Building'));
 app.use('/owner', require('./routes/Owner'));
+app.use('/customer', require('./routes/Customer'));
 
 // error handling middleware
 app.use(function (err, req, res, next) {

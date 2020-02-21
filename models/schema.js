@@ -69,10 +69,29 @@ const OwnerSchema = new Schema({
     }
 });
 
+const CustomerSchema = new Schema({
+    name: {
+        type: String,
+        required: [true, 'Name field is required']
+    },
+    mo_num: {
+        type: Number,
+        required: [true, 'Mobile number is required'],
+    },
+    address: {
+        type: String
+    },
+    email: {
+        type: String
+    }
+});
+
 const Ninja = mongoose.model('ninja', NinjaSchema);
 const Building = mongoose.model('Building', BuildingSchema);
 const Owner = mongoose.model('Owner', OwnerSchema);
+const Customer = mongoose.model('Customer', CustomerSchema);
 
 module.exports.Ninja = Ninja;
 module.exports.Building = Building;
 module.exports.Owner = Owner;
+module.exports.Customer = Customer;
