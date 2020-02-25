@@ -1,0 +1,79 @@
+<div class="container" style="margin-left:16%">
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="profileForm">
+        <div class="row form-group">
+          <label class="col-6">
+            Name:
+            <input type="text" class="form-control" formControlName="name">
+          </label>
+
+          <label class="col-6">
+            Mobile:
+            <input type="text" class="form-control" formControlName="mobile">
+          </label>
+        </div>
+
+        <div class="row form-group">
+          <label class="col-6">
+            Address:
+            <input type="text" class="form-control" formControlName="address">
+          </label>
+          <label class="col-6">
+            Email:
+            <input type="text" class="form-control" formControlName="email">
+          </label>
+          <div *ngIf="! profileForm.get('email').pristine">
+            <small *ngIf="profileForm.get('email').errors.required" class="text-danger">Email is required</small>
+            <small *ngIf="profileForm.get('email').errors.email" class="text-danger">Invalid Email</small>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click'); onAddCustomers()">Save</button>
+    </div>
+  </ng-template>
+
+  <button class="btn btn-outline-primary" (click)="open(content)">Add Customers</button>
+
+  <!-- <hr>
+
+  <pre>{{closeResult}}</pre> -->
+  <table class="table table-hover mt-2">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

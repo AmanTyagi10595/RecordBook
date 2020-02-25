@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AssetManag": {
+    "angRecordBook": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/AssetManag",
+            "outputPath": "dist/angRecordBook",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "AssetManag:build"
+            "browserTarget": "angRecordBook:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "AssetManag:build:production"
+              "browserTarget": "angRecordBook:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AssetManag:build"
+            "browserTarget": "angRecordBook:build"
           }
         },
         "test": {
@@ -111,15 +111,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "AssetManag:serve"
+            "devServerTarget": "angRecordBook:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "AssetManag:serve:production"
+              "devServerTarget": "angRecordBook:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "AssetManag"
+  "defaultProject": "angRecordBook"
 }
