@@ -20,8 +20,15 @@
   vertical-align: baseline;
 }
 
-.shopping-cart-wrap .price {
+.shopping-cart-wrap .amount {
   color: #007bff;
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 5px;
+  display: block;
+}
+.shopping-cart-wrap .pay {
+  color: #47d147;
   font-size: 18px;
   font-weight: bold;
   margin-right: 5px;

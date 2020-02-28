@@ -83,7 +83,11 @@ const CustomerSchema = new Schema({
     },
     email: {
         type: String
+    },
+    balance: {
+        type: Number
     }
+
 });
 
 const SaleRecordSchema = new Schema({
@@ -102,6 +106,9 @@ const SaleRecordSchema = new Schema({
         type: String
     },
     amount: {
+        type: Number
+    },
+    payedAmout: {
         type: Number
     },
     sale_date: {

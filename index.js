@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Error = require('./error/error');
+var cors = require('cors')
+
 
 // set up express app
 const app = express();
@@ -11,7 +13,7 @@ mongoose.connect('mongodb://localhost/RecordBook');
 mongoose.Promise = global.Promise;
 
 // use body-parser middleware
-
+app.use(cors())
 app.use(bodyParser.json());
 app.use(require('body-parser').urlencoded({ extended: true }));
 // initialize routes

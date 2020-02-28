@@ -3,7 +3,6 @@ const Customer = require("../../models/schema").Customer;
 module.exports = {
     // Adding Owner
     addCustomer: (req, res, next) => {
-        console.log("api running add addCustomer", req.body);
         var customer = new Customer(req.body);
         customer.save().then(function (data) {
             res.status(200).send(data);
