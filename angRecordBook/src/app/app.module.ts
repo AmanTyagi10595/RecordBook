@@ -11,6 +11,15 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { ProductSalesComponent } from "./product-sales/product-sales.component";
+// import { MatFormFieldModule } from "@angular/material/form-field";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import {
+  MatFormFieldModule,
+  MatInputModule,
+  MatDatepickerModule
+} from "@angular/material";
+import { MatNativeDateModule } from "@angular/material";
+// import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 @NgModule({
   declarations: [
@@ -26,7 +35,13 @@ import { ProductSalesComponent } from "./product-sales/product-sales.component";
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatFormFieldModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule
+    // MatMomentDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

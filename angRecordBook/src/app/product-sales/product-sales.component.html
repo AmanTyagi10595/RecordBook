@@ -1,15 +1,66 @@
 <div class="container" style="margin-left:16%">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="container" class="col-7">
+      <h2>Sale Record</h2>
+      <form [formGroup]="saleRecord">
+        <div class="border p-3 shadow mb-5 bg-white rounded">
+          <div class="row">
+            <div class="form-group col-6">
+              <label for="amount">Amount</label>
+              <input type="number" class="form-control" placeholder="Amount" name="amount" formControlName="amount">
+            </div>
+            <div class="form-group col-6">
+              <label for="payed">Payed Amount</label>
+              <input type="number" class="form-control" placeholder="Payed" name="payed" formControlName="payed">
+            </div>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-6">
+              <mat-label>Sell Date</mat-label>
+              <input matInput [matDatepicker]="picker" (dateChange)="changeDate($event)" formControlName="saleDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="col-6">
+              <mat-label>Pro_Date</mat-label>
+              <input matInput [matDatepicker]="picker2" formControlName="proDate">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
 
+          <div class="container">
+            <div class="row">
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-4">
+                    <label>Notifie</label>
+                  </div>
+                  <label class="switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" checked (change)="mySwitch = !mySwitch">
+                    <div class="slider round"></div>
+                  </label>
+                </div>
+              </div>
+              <div class="col-6">
+                <button type="submit" class="btn btn-primary float-right" (click)="onAddSale()">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="container">
-    <hr>
     <div class="card">
       <table class="table table-hover shopping-cart-wrap">
         <thead class="text-muted">
           <tr>
-            <th scope="col">Image</th>
+            <th scope="col" width="180">Image</th>
             <th scope="col" width="120">Sale Date</th>
             <th scope="col" width="120">Amount</th>
-            <th scope="col" width="180">Payed</th>
+            <th scope="col" width="100">Payed</th>
             <th scope="col" width="120">Pro_Date</th>
             <th scope="col" width="120">Action</th>
           </tr>

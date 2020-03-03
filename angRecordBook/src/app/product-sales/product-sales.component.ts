@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthServiceService } from "./../auth-service.service";
+import { FormBuilder } from "@angular/forms";
+import { ConditionalExpr } from "@angular/compiler";
+import { connectableObservableDescriptor } from "rxjs/internal/observable/ConnectableObservable";
 
 @Component({
   selector: "app-product-sales",
@@ -12,7 +15,16 @@ export class ProductSalesComponent implements OnInit {
     email: "abhay@gmail.com"
   };
   oneCustomerSale = [];
-  constructor(private service: AuthServiceService) {}
+  saleRecord: any;
+  mySwitch: boolean = true;
+  constructor(private service: AuthServiceService, private fb: FormBuilder) {
+    this.saleRecord = this.fb.group({
+      amount: [""],
+      payed: [""],
+      saleDate: [""],
+      proDate: [""]
+    });
+  }
 
   ngOnInit() {
     this.getOneUserSale();
@@ -23,5 +35,12 @@ export class ProductSalesComponent implements OnInit {
       this.oneCustomerSale = result["msg"];
       console.log("data", this.oneCustomerSale);
     });
+  }
+  onAddSale() {
+    console.log(this.saleRecord.value);
+  }
+
+  changeDate(data) {
+    console.log("d", data);
   }
 }

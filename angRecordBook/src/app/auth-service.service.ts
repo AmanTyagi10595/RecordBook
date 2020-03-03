@@ -20,4 +20,7 @@ export class AuthServiceService {
   getOneUserSale(obj) {
     return this.http.get(`${this.url}saleRecord/${obj.email}`, httpOptions);
   }
+  setSalesData(obj) {
+    return this.http.post(`${this.url}saleRecord/add`, obj, httpOptions);
+  }
 }
