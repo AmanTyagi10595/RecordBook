@@ -53,19 +53,21 @@ const BuildingSchema = new Schema({
 
 const OwnerSchema = new Schema({
     name: {
-        type: String,
-        required: [true, 'Name field is required']
+        type: String
     },
     mo_num: {
-        type: Number,
-        required: [true, 'Mobile number is required'],
-
+        type: Number
     },
     buss_num: {
         type: String
     },
     email: {
-        type: String
+        type: String,
+        required: [true, "Email is required"]
+    },
+    password: {
+        type: String,
+        required: [true, 'Password is required']
     }
 });
 

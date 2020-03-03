@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Error = require('./error/error');
 var cors = require('cors')
+var AuthController = require('./auth/AuthController');
 
 
 // set up express app
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use(require('body-parser').urlencoded({ extended: true }));
 // initialize routes
 
+app.use('/api/auth', AuthController);
 app.use('/building', require('./routes/Building'));
 app.use('/owner', require('./routes/Owner'));
 app.use('/customer', require('./routes/Customer'));
