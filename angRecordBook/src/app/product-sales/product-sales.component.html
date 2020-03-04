@@ -12,25 +12,32 @@
             </div>
             <div class="form-group col-6">
               <label for="payed">Payed Amount</label>
-              <input type="number" class="form-control" placeholder="Payed" name="payed" formControlName="payed">
+              <input type="number" class="form-control" placeholder="Payed Amount" name="payedAmout" formControlName="payedAmout">
             </div>
           </div>
           <div class="row">
             <mat-form-field class="col-6">
               <mat-label>Sell Date</mat-label>
-              <input matInput [matDatepicker]="picker" (dateChange)="changeDate($event)" formControlName="saleDate">
+              <input matInput [matDatepicker]="picker" formControlName="sale_date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="col-6">
               <mat-label>Pro_Date</mat-label>
-              <input matInput [matDatepicker]="picker2" formControlName="proDate">
+              <input matInput [matDatepicker]="picker2" formControlName="promis_date">
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
           </div>
 
-          <div class="container">
+          <div class="">
+            <div *ngIf="!obj.email" class="row">
+
+              <!-- <div class="form-group col-6">
+                <label for="amount">Email</label>
+                <input type="text" class="form-control" placeholder="Email" name="email" formControlName="email">
+              </div> -->
+            </div>
             <div class="row">
               <div class="col-6">
                 <div class="row">

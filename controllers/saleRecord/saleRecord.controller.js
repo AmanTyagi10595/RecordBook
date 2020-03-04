@@ -11,9 +11,12 @@ module.exports = {
     },
     // Get getSalerecord
     getSalerecord: (req, res, next) => {
+        console.log("api running ");
         SaleRecord.find().then(function (data) {
-            res.status(200).send(data);
-        }).catch(next);
+            res.status(200).send({ status: "success", msg: data });
+        }).catch((e) => {
+            next(new Error(400, e.message));
+        });
     },
     // Get getSalerecord for single customer by his email
     getSingleUserSaleRecord: async (req, res, next) => {

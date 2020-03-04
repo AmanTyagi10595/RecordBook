@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/iamshaunjp/rest-api-playlist#readme",
   "dependencies": {
+    "angular-ng-autocomplete": "^2.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.16.1",
     "cors": "^2.8.5",

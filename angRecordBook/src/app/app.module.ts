@@ -16,7 +16,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
   MatFormFieldModule,
   MatInputModule,
-  MatDatepickerModule
+  MatDatepickerModule,
+  MatAutocompleteModule
 } from "@angular/material";
 import { MatNativeDateModule } from "@angular/material";
 // import { MatMomentDateModule } from "@angular/material-moment-adapter";
@@ -40,7 +41,8 @@ import { MatNativeDateModule } from "@angular/material";
     BrowserAnimationsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule
+    MatInputModule,
+    MatAutocompleteModule
     // MatMomentDateModule
   ],
   providers: [],

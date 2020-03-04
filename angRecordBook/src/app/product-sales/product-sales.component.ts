@@ -3,6 +3,7 @@ import { AuthServiceService } from "./../auth-service.service";
 import { FormBuilder } from "@angular/forms";
 import { ConditionalExpr } from "@angular/compiler";
 import { connectableObservableDescriptor } from "rxjs/internal/observable/ConnectableObservable";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-product-sales",
@@ -10,37 +11,62 @@ import { connectableObservableDescriptor } from "rxjs/internal/observable/Connec
   styleUrls: ["./product-sales.component.css"]
 })
 export class ProductSalesComponent implements OnInit {
+  today = new Date();
   totalCustomers: any = ["q", "e", "d", "f"];
   obj = {
-    email: "abhay@gmail.com"
+    email: ""
   };
   oneCustomerSale = [];
   saleRecord: any;
   mySwitch: boolean = true;
-  constructor(private service: AuthServiceService, private fb: FormBuilder) {
+  // userEmail: string = "";
+  constructor(
+    private service: AuthServiceService,
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.saleRecord = this.fb.group({
       amount: [""],
-      payed: [""],
-      saleDate: [""],
-      proDate: [""]
+      payedAmout: [""],
+      sale_date: [""],
+      promis_date: [""],
+      email: [""]
     });
+    this.today.setDate(this.today.getDate());
   }
 
   ngOnInit() {
-    this.getOneUserSale();
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params) {
+        this.obj.email = params.email;
+      }
+      if (this.obj.email) {
+        this.getOneUserSale();
+      } else {
+        this.getAllUsersSale();
+      }
+    });
   }
 
   getOneUserSale() {
     this.service.getOneUserSale(this.obj).subscribe(result => {
       this.oneCustomerSale = result["msg"];
-      console.log("data", this.oneCustomerSale);
+    });
+  }
+  getAllUsersSale() {
+    this.service.getAllUsersSale().subscribe(result => {
+      this.oneCustomerSale = result["msg"];
     });
   }
   onAddSale() {
-    console.log(this.saleRecord.value);
-  }
-
-  changeDate(data) {
-    console.log("d", data);
+    this.saleRecord.value.notifie = this.mySwitch;
+    this.service.addSalesData(this.saleRecord.value).subscribe(
+      result => {
+        console.log("result", result);
+      },
+      err => {
+        console.log("error: ", err);
+      }
+    );
   }
 }

@@ -94,12 +94,10 @@ const CustomerSchema = new Schema({
 
 const SaleRecordSchema = new Schema({
     name: {
-        type: String,
-        required: [true, 'Name field is required']
+        type: String
     },
     mo_num: {
-        type: Number,
-        required: [true, 'Mobile number is required'],
+        type: Number
     },
     email: {
         type: String
