@@ -103,10 +103,10 @@ export class ProductSalesComponent implements OnInit {
     }
   }
   deleteOneSale(_id) {
-    console.log("sale", _id);
     this.service.deleteOneSale(_id).subscribe(
       result => {
-        console.log("deleted");
+        console.log("deleted", result);
+        this.getOneUserSale();
       },
       err => {
         console.error("not deleted");
