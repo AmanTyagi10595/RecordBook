@@ -11,7 +11,7 @@ router.get('/:email', saleRecordController.getSingleUserSaleRecord);
 router.post('/add', saleRecordController.addSalerecord);
 
 // // // Delete Customer
-router.delete('/delete', saleRecordController.deleteSaleRecord);
+router.delete('/delete/:_id', saleRecordController.deleteSaleRecord);
 
 // // // Update Customer
 router.put('/update', saleRecordController.updateSaleReoport);

@@ -13,6 +13,19 @@ module.exports = {
         Customer.find().then(function (data) {
             res.status(200).send(data);
         }).catch(next);
+
+    },
+
+    //get custommer similar to the serched email ID
+    getSimilarCustomer: (req, res, next) => {
+        console.log("In get like customer", req.query);
+        Customer.find({
+            email: {
+                $regex: req.query.data
+            }
+        }, { email: 1, _id: 0 }).then(function (data) {
+            res.status(200).send(data);
+        }).catch(next);
     },
     // Get single building
     getSingleCustomer: async (req, res, next) => {

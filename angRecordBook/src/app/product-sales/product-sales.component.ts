@@ -4,6 +4,7 @@ import { FormBuilder } from "@angular/forms";
 import { ConditionalExpr } from "@angular/compiler";
 import { connectableObservableDescriptor } from "rxjs/internal/observable/ConnectableObservable";
 import { ActivatedRoute } from "@angular/router";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-product-sales",
@@ -12,7 +13,8 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class ProductSalesComponent implements OnInit {
   today = new Date();
-  totalCustomers: any = ["q", "e", "d", "f"];
+  allCustomersEmail = [];
+  result: any = [];
   obj = {
     email: ""
   };
@@ -39,6 +41,9 @@ export class ProductSalesComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if (params) {
         this.obj.email = params.email;
+        this.saleRecord.patchValue({
+          email: params.email
+        });
       }
       if (this.obj.email) {
         this.getOneUserSale();
@@ -63,9 +68,48 @@ export class ProductSalesComponent implements OnInit {
     this.service.addSalesData(this.saleRecord.value).subscribe(
       result => {
         console.log("result", result);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Sale added to ${this.saleRecord.value.email}`,
+          showConfirmButton: false,
+          timer: 2000
+        });
+        if (this.obj.email) {
+          this.getOneUserSale();
+        } else {
+          this.getAllUsersSale();
+        }
       },
       err => {
         console.log("error: ", err);
+      }
+    );
+  }
+  async getUserEmail(event) {
+    this.allCustomersEmail = [];
+    if (event.target.value.length > 3) {
+      await this.service.getLikeCustomer(event.target.value).subscribe(
+        result => {
+          this.result = result;
+          this.result.forEach(e => {
+            this.allCustomersEmail.push(e.email);
+          });
+        },
+        err => {
+          console.log("error: ", err);
+        }
+      );
+    }
+  }
+  deleteOneSale(_id) {
+    console.log("sale", _id);
+    this.service.deleteOneSale(_id).subscribe(
+      result => {
+        console.log("deleted");
+      },
+      err => {
+        console.error("not deleted");
       }
     );
   }

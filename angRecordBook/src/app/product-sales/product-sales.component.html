@@ -6,6 +6,16 @@
       <form [formGroup]="saleRecord">
         <div class="border p-3 shadow mb-5 bg-white rounded">
           <div class="row">
+            <div *ngIf="!obj.email" class="form-group col-6">
+              <label for="email">Email</label>
+              <!-- <input type="text" class="form-control" placeholder="Email" name="email" formControlName="email"> -->
+              <input class="form-control" type="text" (keyup)="getUserEmail($event)" id="userIdFirstWay" list="dynmicUserIds" name="email" formControlName="email">
+              <datalist id="dynmicUserIds">
+                <option *ngFor="let item of allCustomersEmail" [value]="item">{{item}}</option>
+              </datalist>
+            </div>
+          </div>
+          <div class="row">
             <div class="form-group col-6">
               <label for="amount">Amount</label>
               <input type="number" class="form-control" placeholder="Amount" name="amount" formControlName="amount">
@@ -108,7 +118,7 @@
               </td>
               <td class="text-center">
                 <a title="" href="" class="btn btn-outline-success" data-toggle="tooltip" data-original-title="Save to Wishlist"> <i class="fa fa-info"></i></a>
-                <a href="" class="btn btn-outline-danger ml-1"> <i class="fa fa-trash"></i></a>
+                <button class="btn btn-outline-danger ml-1" (click)=deleteOneSale(sale._id)> <i class="fa fa-trash"></i></button>
               </td>
             </tr>
           </ng-container>

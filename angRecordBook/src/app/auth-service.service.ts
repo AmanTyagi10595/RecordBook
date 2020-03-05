@@ -26,4 +26,10 @@ export class AuthServiceService {
   getAllUsersSale() {
     return this.http.get(`${this.url}saleRecord`, httpOptions);
   }
+  getLikeCustomer(data) {
+    return this.http.get(`${this.url}customer/like?data=` + data, httpOptions);
+  }
+  deleteOneSale(_id) {
+    return this.http.delete(`${this.url}saleRecord/delete/${_id}`, httpOptions);
+  }
 }

@@ -29,7 +29,7 @@ module.exports = {
     // Delete SaleRecord
     deleteSaleRecord: (req, res, next) => {
         console.log("Hi delete api running")
-        SaleRecord.findOneAndRemove({ "email": req.body.email }).then((data) => {
+        SaleRecord.findOneAndRemove({ "_id": req.body._id }).then((data) => {
             res.status(200).send({ status: "success", msg: data });
         }).catch((e) => {
             next(new Error(400, e.message));

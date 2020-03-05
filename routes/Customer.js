@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const customerController = require('../controllers/Customer/customer.controller');
 
+//get customer with similar email
+router.get('/like', customerController.getSimilarCustomer);
+
 //Get all Customer
 router.get('/', customerController.getCustomer);
 
@@ -15,5 +18,7 @@ router.delete('/delete', customerController.deleteCustomer);
 
 // // Update Customer
 router.put('/update', customerController.updateCustomer);
+
+
 
 module.exports = router;
