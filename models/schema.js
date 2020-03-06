@@ -111,6 +111,9 @@ const SaleRecordSchema = new Schema({
     payedAmout: {
         type: Number
     },
+    balance: {
+        type: Number
+    },
     sale_date: {
         type: Date
     },

@@ -32,4 +32,7 @@ export class AuthServiceService {
   deleteOneSale(_id) {
     return this.http.delete(`${this.url}saleRecord/delete/${_id}`, httpOptions);
   }
+  getCustomerBalance(email) {
+    return this.http.get(`${this.url}customer/balance/${email}`, httpOptions);
+  }
 }

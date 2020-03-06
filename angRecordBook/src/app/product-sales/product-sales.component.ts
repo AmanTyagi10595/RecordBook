@@ -5,6 +5,7 @@ import { ConditionalExpr } from "@angular/compiler";
 import { connectableObservableDescriptor } from "rxjs/internal/observable/ConnectableObservable";
 import { ActivatedRoute } from "@angular/router";
 import Swal from "sweetalert2";
+import { AlertsService } from "../services/alerts.service";
 
 @Component({
   selector: "app-product-sales",
@@ -21,11 +22,14 @@ export class ProductSalesComponent implements OnInit {
   oneCustomerSale = [];
   saleRecord: any;
   mySwitch: boolean = true;
+  minDate: any;
+  customerBalance: number;
   // userEmail: string = "";
   constructor(
     private service: AuthServiceService,
     private fb: FormBuilder,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private alerts: AlertsService
   ) {
     this.saleRecord = this.fb.group({
       amount: [""],
@@ -44,6 +48,7 @@ export class ProductSalesComponent implements OnInit {
         this.saleRecord.patchValue({
           email: params.email
         });
+        this.getCustomerBalance();
       }
       if (this.obj.email) {
         this.getOneUserSale();
@@ -55,11 +60,13 @@ export class ProductSalesComponent implements OnInit {
 
   getOneUserSale() {
     this.service.getOneUserSale(this.obj).subscribe(result => {
+      console.log("sale record", result);
       this.oneCustomerSale = result["msg"];
     });
   }
   getAllUsersSale() {
     this.service.getAllUsersSale().subscribe(result => {
+      console.log("sale record", result);
       this.oneCustomerSale = result["msg"];
     });
   }
@@ -68,13 +75,8 @@ export class ProductSalesComponent implements OnInit {
     this.service.addSalesData(this.saleRecord.value).subscribe(
       result => {
         console.log("result", result);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `Sale added to ${this.saleRecord.value.email}`,
-          showConfirmButton: false,
-          timer: 2000
-        });
+        this.alerts.sucessAlert(this.saleRecord.value.email);
+        this.saleRecord.reset();
         if (this.obj.email) {
           this.getOneUserSale();
         } else {
@@ -82,6 +84,7 @@ export class ProductSalesComponent implements OnInit {
         }
       },
       err => {
+        this.alerts.failureAlert();
         console.log("error: ", err);
       }
     );
@@ -103,13 +106,31 @@ export class ProductSalesComponent implements OnInit {
     }
   }
   deleteOneSale(_id) {
-    this.service.deleteOneSale(_id).subscribe(
+    this.alerts.deleteComfirm().then(result => {
+      if (result.value) {
+        this.service.deleteOneSale(_id).subscribe(
+          result => {
+            Swal.fire("Deleted!", "This sale has been deleted.", "success");
+            this.getOneUserSale();
+          },
+          err => {
+            console.error("not deleted");
+            this.alerts.failureAlert();
+          }
+        );
+      }
+    });
+  }
+  onSelectSaleDate(event) {
+    this.minDate = this.saleRecord.value.sale_date;
+  }
+  getCustomerBalance() {
+    this.service.getCustomerBalance(this.obj.email).subscribe(
       result => {
-        console.log("deleted", result);
-        this.getOneUserSale();
+        console.log("result", result);
       },
       err => {
-        console.error("not deleted");
+        console.error("not deleted", err);
       }
     );
   }

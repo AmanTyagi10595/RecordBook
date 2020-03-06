@@ -79,6 +79,7 @@ export class DashboardComponent implements OnInit {
     this.service.getAllCustomer().subscribe(
       result => {
         this.totalCustomers = result;
+        console.log(result);
       },
       err => {}
     );

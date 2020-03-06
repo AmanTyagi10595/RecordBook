@@ -19,6 +19,8 @@ router.delete('/delete', customerController.deleteCustomer);
 // // Update Customer
 router.put('/update', customerController.updateCustomer);
 
+//get one customer remaining balance
+router.get('/balance/:email', customerController.getCustomerBalance);
 
 
 module.exports = router;

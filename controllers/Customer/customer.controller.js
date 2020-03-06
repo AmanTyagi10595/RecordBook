@@ -57,6 +57,15 @@ module.exports = {
         else {
             res.status(400).send({ status: "fail", msg: "please provide Update Details" });
         }
-    }
+    },
+
+    getCustomerBalance: (req, res, next) => {
+        Customer.find({ "email": req.params.email }, { balance: 1 }).then(data => {
+            res.status(200).send(data);
+        }).catch(err => {
+            res.status(200).send(err);
+        });
+
+    },
 
 };
