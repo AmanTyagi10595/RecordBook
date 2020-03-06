@@ -127,7 +127,7 @@ export class ProductSalesComponent implements OnInit {
   getCustomerBalance() {
     this.service.getCustomerBalance(this.obj.email).subscribe(
       result => {
-        console.log("result", result);
+        this.customerBalance = result[0].balance;
       },
       err => {
         console.error("not deleted", err);

@@ -76,8 +76,9 @@
           <rect width="100%" height="100%" fill="#868e96" /><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
         </svg>
 
-        <div class="card-body">
-          <p class="card-tex"></p>
+        <div class="card-body forStyle">
+          <p *ngIf="customerBalance > 0" class="card-text">{{customerBalance }} Jma</p>
+          <p *ngIf="customerBalance < 0" class="card-text"><i class="fa fa-inr"></i>{{customerBalance}} Uhar</p>
         </div>
       </div>
     </div>

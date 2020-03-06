@@ -60,7 +60,7 @@ module.exports = {
     },
 
     getCustomerBalance: (req, res, next) => {
-        Customer.find({ "email": req.params.email }, { balance: 1 }).then(data => {
+        Customer.find({ "email": req.params.email }, { balance: 1, "_id": 0 }).then(data => {
             res.status(200).send(data);
         }).catch(err => {
             res.status(200).send(err);
