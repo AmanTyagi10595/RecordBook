@@ -6,6 +6,7 @@ import { connectableObservableDescriptor } from "rxjs/internal/observable/Connec
 import { ActivatedRoute } from "@angular/router";
 import Swal from "sweetalert2";
 import { AlertsService } from "../services/alerts.service";
+import { UploadfilesService } from "../services/uploadfiles.service";
 
 @Component({
   selector: "app-product-sales",
@@ -24,12 +25,14 @@ export class ProductSalesComponent implements OnInit {
   mySwitch: boolean = true;
   minDate: any;
   customerBalance: number;
+  selectedFile: File;
   // userEmail: string = "";
   constructor(
     private service: AuthServiceService,
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private alerts: AlertsService
+    private alerts: AlertsService,
+    private Uploadfiles: UploadfilesService
   ) {
     this.saleRecord = this.fb.group({
       amount: [""],
@@ -43,7 +46,8 @@ export class ProductSalesComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
-      if (params) {
+      if (params && params.email) {
+        console.log("params", params);
         this.obj.email = params.email;
         this.saleRecord.patchValue({
           email: params.email
@@ -60,19 +64,22 @@ export class ProductSalesComponent implements OnInit {
 
   getOneUserSale() {
     this.service.getOneUserSale(this.obj).subscribe(result => {
-      console.log("sale record", result);
+      // console.log("sale record", result);
       this.oneCustomerSale = result["msg"];
     });
   }
   getAllUsersSale() {
     this.service.getAllUsersSale().subscribe(result => {
-      console.log("sale record", result);
+      // console.log("sale record", result);
       this.oneCustomerSale = result["msg"];
     });
   }
   onAddSale() {
+    const uploadData = new FormData();
     this.saleRecord.value.notifie = this.mySwitch;
-    this.service.addSalesData(this.saleRecord.value).subscribe(
+    uploadData.append("imgUploader", this.selectedFile);
+    uploadData.append("test", JSON.stringify(this.saleRecord.value));
+    this.service.addSalesData(uploadData).subscribe(
       result => {
         console.log("result", result);
         this.alerts.sucessAlert(this.saleRecord.value.email);
@@ -127,7 +134,27 @@ export class ProductSalesComponent implements OnInit {
   getCustomerBalance() {
     this.service.getCustomerBalance(this.obj.email).subscribe(
       result => {
+        console.log("balance ", result);
         this.customerBalance = result[0].balance;
+      },
+      err => {
+        console.error("not deleted", err);
+      }
+    );
+  }
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0];
+    console.log("selectedFile", this.selectedFile);
+  }
+  upload() {
+    const uploadData = new FormData();
+    uploadData.append("imgUploader", this.selectedFile);
+    uploadData.append("test", JSON.stringify(this.saleRecord.value));
+    console.log(this.saleRecord.value);
+    console.log(uploadData);
+    this.service.uploadFile(uploadData).subscribe(
+      result => {
+        console.log("result", result);
       },
       err => {
         console.error("not deleted", err);

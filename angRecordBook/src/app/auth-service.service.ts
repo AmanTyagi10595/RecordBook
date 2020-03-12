@@ -21,7 +21,8 @@ export class AuthServiceService {
     return this.http.get(`${this.url}saleRecord/${obj.email}`, httpOptions);
   }
   addSalesData(obj) {
-    return this.http.post(`${this.url}saleRecord/add`, obj, httpOptions);
+    console.log("in service", obj);
+    return this.http.post(`${this.url}saleRecord/add`, obj);
   }
   getAllUsersSale() {
     return this.http.get(`${this.url}saleRecord`, httpOptions);
@@ -34,5 +35,8 @@ export class AuthServiceService {
   }
   getCustomerBalance(email) {
     return this.http.get(`${this.url}customer/balance/${email}`, httpOptions);
+  }
+  uploadFile(files) {
+    return this.http.post(`${this.url}api/Upload`, files);
   }
 }

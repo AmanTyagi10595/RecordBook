@@ -21,6 +21,7 @@ import {
 } from "@angular/material";
 import { MatNativeDateModule } from "@angular/material";
 import { AlertsService } from "./services/alerts.service";
+import { UploadfilesService } from "./services/uploadfiles.service";
 // import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 @NgModule({
@@ -46,7 +47,7 @@ import { AlertsService } from "./services/alerts.service";
     MatAutocompleteModule
     // MatMomentDateModule
   ],
-  providers: [AlertsService],
+  providers: [AlertsService, UploadfilesService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
