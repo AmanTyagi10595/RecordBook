@@ -19,14 +19,20 @@ function upload1(req, res) {
 
     return new Promise((resolve, reject) => {
 
+        // console.log("dtaa", req)
         upload(req, res, function (err) {
+
             if (err) {
                 reject({ msg: "Error occured", "err": err, });
-                // return res.end("Something went wrong!");
+            } else {
+                let path = [];
+                req.files.forEach(element => {
+                    path.push(element.filename);
+                });
+                console.log("testing", path);
+                resolve({ msg: "Successfully uploaded", imagePath: path.join(",") });
             }
-            resolve({ msg: "Successfully uploaded" });
-            // return res.end("File uploaded sucessfully!.");
-            // res.status(200).json({ success: true, message: 'File uploaded successfully' });
+
         });
     });
 }

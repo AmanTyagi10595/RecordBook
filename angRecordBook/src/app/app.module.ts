@@ -22,6 +22,7 @@ import {
 import { MatNativeDateModule } from "@angular/material";
 import { AlertsService } from "./services/alerts.service";
 import { UploadfilesService } from "./services/uploadfiles.service";
+import { FileUploadModule } from "ng2-file-upload";
 // import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 @NgModule({
@@ -44,7 +45,8 @@ import { UploadfilesService } from "./services/uploadfiles.service";
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    FileUploadModule
     // MatMomentDateModule
   ],
   providers: [AlertsService, UploadfilesService],

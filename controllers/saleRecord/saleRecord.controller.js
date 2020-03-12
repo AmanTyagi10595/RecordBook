@@ -22,40 +22,31 @@ module.exports = {
     // Adding Owner
     addSalerecord: (req, res, next) => {
 
-        upload(req, res).then(res => {
-            console.log("response", res, req.body.test);
+        upload(req, res).then(result => {
+            console.log("response", result);
+            var data = JSON.parse(req.body.test);
+            var balance = (data.amount) - (data.payedAmout);
+            data.balance = balance;
+            var saleRecord = new SaleRecord(data);
+            saleRecord.save().then((result) => {
+                console.log("result3", result.toObject());
+                CustomerSchema.update(
+                    { email: `${data.email}` },
+                    { $inc: { 'balance': `${data.balance}` } }).then(function (result) {
+                        console.log("resu", result);
+                        res.status(200).send({ status: "success", msg: result });
+                    }).catch((err) => {
+                        console.log("error", err)
+                        res.status(400).send({ status: "failure", msg: err });
+                    });
+            }).catch((err) => {
+                res.status(400).send({ status: "failure", msg: err });
+            });
+
         }, err => {
             console.log("error", err);
-        });
-        // upload(req, res, function (err, data) {
-        //     console.log("body", JSON.parse(req.body.test));
-
-        //     if (err) {
-        //         return res.end(err.message);
-        //     }
-
-        //     // res.status(200).json({ success: true, message: 'File uploaded successfully' });
-
-        // });
-        var data = JSON.parse(req.body.test);
-        var balance = (data.amount) - (data.payedAmout);
-        data.balance = balance;
-        var saleRecord = new SaleRecord(data);
-        saleRecord.save().then((result) => {
-            console.log("result3", result.toObject());
-            CustomerSchema.update(
-                { email: `${data.email}` },
-                { $inc: { 'balance': `${data.balance}` } }).then(function (result) {
-                    console.log("resu", result)
-                    res.status(200).send({ status: "success", msg: result });
-                }).catch((err) => {
-                    console.log("error", err)
-                    res.satus(400).send({ status: "failure", msg: err });
-                });
-        }).catch((err) => {
             res.status(400).send({ status: "failure", msg: err });
         });
-
     },
     // Get getSalerecord
     getSalerecord: (req, res, next) => {

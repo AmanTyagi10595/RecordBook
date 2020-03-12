@@ -7,6 +7,7 @@ import { ActivatedRoute } from "@angular/router";
 import Swal from "sweetalert2";
 import { AlertsService } from "../services/alerts.service";
 import { UploadfilesService } from "../services/uploadfiles.service";
+import { FileUploader, FileLikeObject } from "ng2-file-upload";
 
 @Component({
   selector: "app-product-sales",
@@ -26,7 +27,23 @@ export class ProductSalesComponent implements OnInit {
   minDate: any;
   customerBalance: number;
   selectedFile: File;
-  // userEmail: string = "";
+  public FilesUploader: FileUploader = new FileUploader({
+    url: "http://localhost:3000/saleRecord/add",
+    disableMultipart: true,
+    allowedMimeType: [
+      "image/jpg",
+      "image/jpeg",
+      "image/png",
+      "image/svg+xml",
+      "image/gif",
+      "image/x-eps",
+      "image/bmp",
+      "application/illustrator",
+      "image/tiff"
+    ],
+    autoUpload: false
+  });
+
   constructor(
     private service: AuthServiceService,
     private fb: FormBuilder,
@@ -64,22 +81,22 @@ export class ProductSalesComponent implements OnInit {
 
   getOneUserSale() {
     this.service.getOneUserSale(this.obj).subscribe(result => {
-      // console.log("sale record", result);
       this.oneCustomerSale = result["msg"];
     });
   }
   getAllUsersSale() {
     this.service.getAllUsersSale().subscribe(result => {
-      // console.log("sale record", result);
       this.oneCustomerSale = result["msg"];
     });
   }
   onAddSale() {
-    const uploadData = new FormData();
-    this.saleRecord.value.notifie = this.mySwitch;
-    uploadData.append("imgUploader", this.selectedFile);
-    uploadData.append("test", JSON.stringify(this.saleRecord.value));
-    this.service.addSalesData(uploadData).subscribe(
+    let files = this.myFiles();
+    const formData = new FormData();
+    files.forEach(file => {
+      formData.append("imgUploader", file.rawFile);
+    });
+    formData.append("test", JSON.stringify(this.saleRecord.value));
+    this.service.addSalesData(formData).subscribe(
       result => {
         console.log("result", result);
         this.alerts.sucessAlert(this.saleRecord.value.email);
@@ -134,7 +151,6 @@ export class ProductSalesComponent implements OnInit {
   getCustomerBalance() {
     this.service.getCustomerBalance(this.obj.email).subscribe(
       result => {
-        console.log("balance ", result);
         this.customerBalance = result[0].balance;
       },
       err => {
@@ -142,23 +158,11 @@ export class ProductSalesComponent implements OnInit {
       }
     );
   }
-  onFileChanged(event) {
-    this.selectedFile = event.target.files[0];
-    console.log("selectedFile", this.selectedFile);
-  }
-  upload() {
-    const uploadData = new FormData();
-    uploadData.append("imgUploader", this.selectedFile);
-    uploadData.append("test", JSON.stringify(this.saleRecord.value));
-    console.log(this.saleRecord.value);
-    console.log(uploadData);
-    this.service.uploadFile(uploadData).subscribe(
-      result => {
-        console.log("result", result);
-      },
-      err => {
-        console.error("not deleted", err);
-      }
-    );
+
+  myFiles() {
+    console.log("yy", this.FilesUploader.queue);
+    return this.FilesUploader.queue.map(fileItem => {
+      return fileItem.file;
+    });
   }
 }
