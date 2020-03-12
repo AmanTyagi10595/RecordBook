@@ -19,7 +19,6 @@ function upload1(req, res) {
 
     return new Promise((resolve, reject) => {
 
-        // console.log("dtaa", req)
         upload(req, res, function (err) {
 
             if (err) {

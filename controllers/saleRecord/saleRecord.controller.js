@@ -1,32 +1,18 @@
 const SaleRecord = require("../../models/schema").SaleRecord;
 const CustomerSchema = require("../../models/schema").Customer;
 const upload = require("../fileUpload");
-// var multer = require('multer');
-// var Storage = multer.diskStorage({
-//     destination: function (req, file, callback) {
-//         if (file.mimetype.slice(0, 5) == "image") {
-//             callback(null, "./uploads/Images");
-//         } else {
-//             callback(null, "./uploads/Files");
-//         }
-//     },
-//     filename: function (req, file, callback) {
-//         callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
-//     }
-// });
-// var upload = multer({
-//     storage: Storage
-// }).array("imgUploader", 3);
+
 
 module.exports = {
     // Adding Owner
     addSalerecord: (req, res, next) => {
 
         upload(req, res).then(result => {
-            console.log("response", result);
+            console.log("response", result.imagePath);
             var data = JSON.parse(req.body.test);
             var balance = (data.amount) - (data.payedAmout);
             data.balance = balance;
+            data.image_url = result.imagePath;
             var saleRecord = new SaleRecord(data);
             saleRecord.save().then((result) => {
                 console.log("result3", result.toObject());

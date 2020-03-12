@@ -103,6 +103,15 @@ input:checked + .slider:before {
 .example-full-width {
   width: 100%;
 }
-.forStyle{
-  
+.forStyle {
+  background-color: #f9f3f3;
+}
+.forBox {
+  -webkit-box-shadow: 0px 0px 12px -6px rgba(21, 23, 26, 0.61);
+  -moz-box-shadow: 0px 0px 12px -6px rgba(21, 23, 26, 0.61);
+  box-shadow: 0px 0px 12px -6px rgba(21, 23, 26, 0.61);
+  border-radius: 14px 14px 14px 14px;
+  -moz-border-radius: 14px 14px 14px 14px;
+  -webkit-border-radius: 14px 14px 14px 14px;
+  border: 0px solid #d117d1;
 }

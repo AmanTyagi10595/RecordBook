@@ -87,6 +87,7 @@ export class ProductSalesComponent implements OnInit {
   getAllUsersSale() {
     this.service.getAllUsersSale().subscribe(result => {
       this.oneCustomerSale = result["msg"];
+      console.log("input data", this.oneCustomerSale);
     });
   }
   onAddSale() {

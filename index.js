@@ -1,4 +1,5 @@
 const express = require('express');
+var path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Error = require('./error/error');
@@ -33,6 +34,7 @@ mongoose.Promise = global.Promise;
 app.use(cors())
 app.use(bodyParser.json());
 app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'uploads')));
 // initialize routes
 
 app.get("/", function (req, res) {
