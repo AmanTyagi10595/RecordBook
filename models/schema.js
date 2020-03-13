@@ -88,6 +88,9 @@ const CustomerSchema = new Schema({
     },
     balance: {
         type: Number
+    },
+    img_url: {
+        type: String
     }
 
 });

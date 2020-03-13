@@ -5,6 +5,10 @@ const mongoose = require('mongoose');
 const Error = require('./error/error');
 var cors = require('cors')
 var AuthController = require('./auth/AuthController');
+var scheduledApi = require('./controllers/Customer/customer.controller');
+
+var CronJob = require('cron').CronJob;
+
 
 var multer = require('multer');
 var Storage = multer.diskStorage({
@@ -61,6 +65,12 @@ app.use(function (err, req, res, next) {
     console.log("Error:", err.message); // to see properties of message in our console
     res.status(err.status).send({ error: err.message });
 });
+//Crone Job
+// var job = new CronJob('*/2 * * * * *', function () {
+//     console.log('Crone Job run');
+//     scheduledApi.notify();
+// }, null, true, 'America/Los_Angeles');
+// job.start(); // call crone job
 
 // listen for requests
 app.listen(process.env.port || 4000, function () {

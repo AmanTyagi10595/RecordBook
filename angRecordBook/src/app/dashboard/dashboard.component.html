@@ -35,6 +35,7 @@
             <small *ngIf="profileForm.get('email').errors.required" class="text-danger">Email is required</small>
             <small *ngIf="profileForm.get('email').errors.email" class="text-danger">Invalid Email</small>
           </div>
+          <input class="form-control" type="file" ng2FileSelect [uploader]="FilesUploader" multiple (change)="myFiles()" />
         </div>
       </form>
     </div>
@@ -55,6 +56,7 @@
             <th scope="col" width="120">Mobile</th>
             <th scope="col" width="120">Balance</th>
             <th scope="col" width="200" class="text-center">Action</th>
+            <th scope="col" width="120">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -62,7 +64,7 @@
             <tr>
               <td>
                 <figure class="media">
-                  <div class="img-wrap"><img src="http://bootstrap-ecommerce.com/main/images/items/2.jpg" class="img-thumbnail img-sm"></div>
+                  <div class="img-wrap"><img src="http://localhost:4000/Images/{{customer.img_url}}" class="img-thumbnail img-sm"></div>
                   <figcaption class="media-body">
                     <h6 class="title text-truncate">{{customer.name}}</h6>
                     <dl class="param param-inline small">
@@ -86,9 +88,13 @@
                 </div> <!-- price-wrap .// -->
               </td>
               <td class="text-center">
-                <a title="add sale for this user" [routerLink]="['/productSale']" [queryParams]="customer" class="btn btn-outline-success" data-toggle="tooltip" data-original-title="Save to Wishlist"> <i class="fa fa-edit"></i></a>
-                <a href="" class="btn btn-outline-danger ml-1"> Notifie</a>
+                <a title="add sale for this user" [routerLink]="['/productSale']" [queryParams]="customer" class="btn btn-outline-success" data-toggle="tooltip" data-original-title="Save to Wishlist"> <i class="fas fa-plus"></i></a>
+                <a class="btn btn-outline-danger ml-1 text-danger" (click)="notifieCustomer(customer)"> Notifie</a>
 
+              </td>
+              <td>
+                <a title="Delete Customer" class="btn btn-outline-danger" data-toggle="tooltip" (click)="deleteCustomer(customer.email)"> <i class="fas fa-trash-alt" style="color: rgb(228, 58, 58);"></i></a>
+                <a title="Edit Customer" class="btn btn-outline-primary ml-1" data-toggle="tooltip"> <i class="fa fa-edit" style="color: rgb(7, 112, 197);"></i></a>
               </td>
             </tr>
           </ng-container>

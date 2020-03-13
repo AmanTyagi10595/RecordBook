@@ -14,13 +14,15 @@ router.get('/:email', customerController.getSingleCustomer);
 router.post('/add', customerController.addCustomer);
 
 // // Delete Customer
-router.delete('/delete', customerController.deleteCustomer);
+router.post('/delete', customerController.deleteCustomer);
 
 // // Update Customer
 router.put('/update', customerController.updateCustomer);
 
 //get one customer remaining balance
 router.get('/balance/:email', customerController.getCustomerBalance);
+
+router.post('/notifyOneCustomer', customerController.notify);
 
 
 module.exports = router;

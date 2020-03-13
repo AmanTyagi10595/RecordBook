@@ -12,7 +12,8 @@ export class AuthServiceService {
 
   url = "http://localhost:4000/";
   addCustomer(obj) {
-    return this.http.post(`${this.url}customer/add`, obj, httpOptions);
+    console.log("testing", obj);
+    return this.http.post(`${this.url}customer/add`, obj);
   }
   getAllCustomer() {
     return this.http.get(`${this.url}customer`, httpOptions);
@@ -36,7 +37,13 @@ export class AuthServiceService {
   getCustomerBalance(email) {
     return this.http.get(`${this.url}customer/balance/${email}`, httpOptions);
   }
+  deleteCustomer(obj) {
+    return this.http.post(`${this.url}customer/delete/`, obj);
+  }
   uploadFile(files) {
     return this.http.post(`${this.url}api/Upload`, files);
+  }
+  notifieSingleCustomer(obj) {
+    return this.http.post(`${this.url}customer/notifyOneCustomer`, obj);
   }
 }

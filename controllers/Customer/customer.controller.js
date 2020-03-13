@@ -1,33 +1,28 @@
 const Customer = require("../../models/schema").Customer;
-var multer = require('multer');
-var Storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        console.log(file)
-        if (file.mimetype.slice(0, 5) == "image") {
-            callback(null, "./uploads/Images");
-        } else {
-            callback(null, "./uploads/Files");
-        }
-
-    },
-    filename: function (req, file, callback) {
-        callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
-    }
-});
-var upload = multer({
-    storage: Storage
-}).array("imgUploader", 3);
+const upload = require("../fileUpload");
+const notifie = require("../notifie");
 
 module.exports = {
+
     // Adding Owner
     addCustomer: (req, res, next) => {
-        upload(req, res, async err => {
-            console.log(err)
-        })
-        var customer = new Customer(req.body);
-        customer.save().then(function (data) {
-            res.status(200).send(data);
-        }).catch(next);
+        // console.log("trr", req.body);
+        upload(req, res).then(result => {
+            console.log("response", result, JSON.parse(req.body.test));
+            let data = JSON.parse(req.body.test);
+            data.img_url = result['imagePath'];
+            var customer = new Customer(data);
+            customer.save().then(function (data) {
+
+                res.status(200).send({ status: "success", msg: "uploadSave" });
+            }).catch(next);
+        }, err => {
+            console.log("error", err);
+            var customer = new Customer(JSON.parse(req.body.test));
+            customer.save().then(function (data) {
+                res.status(200).send({ status: "success", msg: "onlydSave" });
+            }).catch(next);
+        });
     },
     // Get Building
     getCustomer: (req, res, next) => {
@@ -58,6 +53,7 @@ module.exports = {
     },
     // Delete Building
     deleteCustomer: (req, res, next) => {
+        console.log("delet customer", req.body)
         Customer.findOneAndRemove({ "email": req.body.email }).then((data) => {
             res.status(200).send({ status: "success", msg: data });
         }).catch((e) => {
@@ -88,5 +84,12 @@ module.exports = {
         });
 
     },
+    notify: (req, res, next) => {
+        notifie.notifie(req.body).then(result => {
+            res.status(200).send({ msg: "Customer notified", status: "success" });
+        }).catch(err => {
+            res.status(422).send({ msg: "Somthing wrong", status: "failure" });
+        })
 
+    }
 };
