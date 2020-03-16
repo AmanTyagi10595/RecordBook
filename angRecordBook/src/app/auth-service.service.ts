@@ -52,4 +52,7 @@ export class AuthServiceService {
   notifieRangedCustomers(obj) {
     return this.http.post(`${this.url}customer/notifiedRanged`, obj);
   }
+  dateRangedCustomers(obj) {
+    return this.http.post(`${this.url}customer/dateRangedCustomers`, obj);
+  }
 }

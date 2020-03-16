@@ -24,5 +24,13 @@ router.get('/balance/:email', customerController.getCustomerBalance);
 
 router.post('/notifyOneCustomer', customerController.notify);
 
+//customer with defined range of udhaar
+router.post('/ranged', customerController.rangedCustomer);
+
+//notifie group of customers
+router.post('/notifiedRanged', customerController.groupNotifie);
+
+//Customers according to their date of promise 
+router.post('/dateRangedCustomers', customerController.dateRangedCustomers);
 
 module.exports = router;

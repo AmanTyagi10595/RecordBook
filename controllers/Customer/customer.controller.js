@@ -1,4 +1,5 @@
 const Customer = require("../../models/schema").Customer;
+const SaleRecord = require("../../models/schema").SaleRecord;
 const upload = require("../fileUpload");
 const notifie = require("../notifie");
 
@@ -91,5 +92,35 @@ module.exports = {
             res.status(422).send({ msg: "Somthing wrong", status: "failure" });
         })
 
+    },
+    groupNotifie: (req, res, next) => {
+        notifie.groupNotifie(req.body).then(result => {
+            res.status(200).send({ msg: "Customer notified", status: "success" });
+        }).catch(err => {
+            console.log()
+            res.status(422).send({ msg: "Somthing wrong", status: "failure" });
+        })
+    },
+    rangedCustomer: (req, res, next) => {
+        Customer.find({ balance: { $gt: `${req.body.minValue}`, $lt: `${req.body.maxValue}` } }).then(result => {
+            if (result) {
+                res.status(200).send({ status: "sucess", msg: result });
+            }
+        }).catch(err => {
+            res.status(400).send({ status: "failure", msg: err })
+        })
+    },
+
+    dateRangedCustomers: (req, res, next) => {
+        console.log("running")
+        SaleRecord.find({ sale_date: { $gt: new Date(`${req.body.minValue}`) } }).then(result => {
+            if (result) {
+                console.log("hi", result);
+
+                res.status(200).send({ status: "sucess", msg: result });
+            }
+        }).catch(err => {
+            res.status(400).send({ status: "failure", msg: err });
+        })
     }
 };

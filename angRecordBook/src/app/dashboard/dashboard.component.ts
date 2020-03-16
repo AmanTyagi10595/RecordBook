@@ -215,7 +215,7 @@ export class DashboardComponent implements OnInit {
     });
     this.service.notifieRangedCustomers(data).subscribe(
       result => {
-        if (result.status == "success") {
+        if (result["status"] == "success") {
           this.alerts.successAlertDynamic("All selected users Notified !");
         }
       },
@@ -227,5 +227,18 @@ export class DashboardComponent implements OnInit {
   }
   inlineRangeChange(event) {
     console.log("gsads", event.target.value);
+    let data = event.target.value;
+    let obj = {};
+    obj["minValue"] = data.minValue;
+    obj["maxValue"] = data.maxValue;
+
+    this.service.dateRangedCustomers().subscribe(
+      result => {
+        console.log(result);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 }

@@ -17,8 +17,8 @@ module.exports = {
             from: 'amantyagi10595js@gmail.com',
             to: data['email'],
             subject: 'Regarding Payment',
-            // text: 'Hi',
-            html: `<h1>Hi,${data.name}</h1><p>The pending amount you need to pay us : <b>${data.balance}</b>, thanks</p>`
+            text: 'Hi',
+            // html: `<h1>Hi,${data.name}</h1><p>The pending amount you need to pay us : <b>${data.balance}</b>, thanks</p>`
         };
         return new Promise(function (resolve, reject) {
             transporter.sendMail(mailOptions, function (error, info) {
@@ -29,6 +29,29 @@ module.exports = {
                 }
             });
         });
+
+    },
+    groupNotifie: (data) => {
+        console.log("in Noyifie grour", data);
+        var mailOptions = {
+            from: 'amantyagi10595js@gmail.com',
+            to: "",
+            subject: 'Regarding Payment',
+            text: "",
+        };
+        let err = false;
+        let promises = [];
+        data.forEach((element) => {
+            mailOptions.to = element.email,
+                mailOptions.text = "You need to pay " + `${(element.balance)}` + " rupees",
+                mailOptions.subject = "Hi, " + `${element.name}`;
+            promises.push(transporter.sendMail(mailOptions));
+        });
+        return Promise.all(promises).then(data => {
+            return new Promise(resolve => resolve("success"));
+        }).catch(e => {
+            return new Promise(reject => reject(e));
+        })
 
     }
 };
