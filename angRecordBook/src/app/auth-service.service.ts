@@ -46,4 +46,10 @@ export class AuthServiceService {
   notifieSingleCustomer(obj) {
     return this.http.post(`${this.url}customer/notifyOneCustomer`, obj);
   }
+  getRangedCustomers(obj) {
+    return this.http.post(`${this.url}customer/ranged`, obj);
+  }
+  notifieRangedCustomers(obj) {
+    return this.http.post(`${this.url}customer/notifiedRanged`, obj);
+  }
 }

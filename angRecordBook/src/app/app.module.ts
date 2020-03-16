@@ -13,16 +13,19 @@ import { HttpClientModule } from "@angular/common/http";
 import { ProductSalesComponent } from "./product-sales/product-sales.component";
 // import { MatFormFieldModule } from "@angular/material/form-field";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { Ng5SliderModule } from "ng5-slider";
 import {
   MatFormFieldModule,
   MatInputModule,
   MatDatepickerModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatNativeDateModule,
+  MatButtonModule
 } from "@angular/material";
-import { MatNativeDateModule } from "@angular/material";
 import { AlertsService } from "./services/alerts.service";
 import { UploadfilesService } from "./services/uploadfiles.service";
 import { FileUploadModule } from "ng2-file-upload";
+import { SatDatepickerModule, SatNativeDateModule } from "saturn-datepicker";
 // import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 @NgModule({
@@ -46,8 +49,11 @@ import { FileUploadModule } from "ng2-file-upload";
     MatNativeDateModule,
     MatInputModule,
     MatAutocompleteModule,
-    FileUploadModule
-    // MatMomentDateModule
+    FileUploadModule,
+    Ng5SliderModule,
+    MatButtonModule,
+    SatDatepickerModule,
+    SatNativeDateModule
   ],
   providers: [AlertsService, UploadfilesService],
   bootstrap: [AppComponent]

@@ -5,6 +5,7 @@ import { FormBuilder } from "@angular/forms";
 import { Validators, FormGroup, FormControl } from "@angular/forms";
 import { FileUploader, FileLikeObject } from "ng2-file-upload";
 import { AlertsService } from "../services/alerts.service";
+import { Options, LabelType } from "ng5-slider";
 import Swal from "sweetalert2";
 @Component({
   selector: "app-dashboard",
@@ -16,6 +17,7 @@ export class DashboardComponent implements OnInit {
   data = "test";
   profileForm: FormGroup;
   modalRef: any;
+  rangeNotifier: boolean = false;
   totalCustomers: any = [];
   public FilesUploader: FileUploader = new FileUploader({
     url: "http://localhost:3000/saleRecord/add",
@@ -33,12 +35,39 @@ export class DashboardComponent implements OnInit {
     ],
     autoUpload: false
   });
+
+  //regarding date range picker
+  dateRange: FormGroup;
+  // rangesFooter = RangesFooter;
+  inlineRange;
+
+  //regarding range slider
+  minValue: number = 1000;
+  maxValue: number = 70000;
+  options: Options = {
+    floor: 0,
+    ceil: 100000,
+    translate: (value: number, label: LabelType): string => {
+      switch (label) {
+        case LabelType.Low:
+          return "<b>Min price:</b> ₹" + value;
+        case LabelType.High:
+          return "<b>Max price:</b> ₹" + value;
+        default:
+          return "₹" + value;
+      }
+    }
+  };
   constructor(
     private modalService: NgbModal,
     private fb: FormBuilder,
     private service: AuthServiceService,
     private alerts: AlertsService
-  ) {}
+  ) {
+    this.dateRange = fb.group({
+      date: [{ begin: new Date(2018, 7, 5), end: new Date(2018, 7, 25) }]
+    });
+  }
 
   open(content) {
     this.modalRef = this.modalService.open(content);
@@ -108,6 +137,7 @@ export class DashboardComponent implements OnInit {
     // }
   }
   getAllCustomer() {
+    this.rangeNotifier = false;
     this.service.getAllCustomer().subscribe(
       result => {
         this.totalCustomers = result;
@@ -160,5 +190,42 @@ export class DashboardComponent implements OnInit {
         this.alerts.failureAlertDynamic("Invalid Email");
       }
     );
+  }
+  getRangedCustomer() {
+    let obj = { minValue: this.minValue, maxValue: this.maxValue };
+    this.service.getRangedCustomers(obj).subscribe(
+      result => {
+        this.totalCustomers = result["msg"];
+        this.rangeNotifier = true;
+      },
+      err => {
+        console.log(err);
+        this.alerts.failureAlert();
+      }
+    );
+  }
+  notifieRangedCustomer() {
+    let data = [];
+    this.totalCustomers.forEach(element => {
+      let obj = {};
+      obj["email"] = element.email;
+      obj["name"] = element.name;
+      obj["balance"] = element.balance;
+      data.push(obj);
+    });
+    this.service.notifieRangedCustomers(data).subscribe(
+      result => {
+        if (result.status == "success") {
+          this.alerts.successAlertDynamic("All selected users Notified !");
+        }
+      },
+      err => {
+        console.log(err);
+        this.alerts.failureAlert();
+      }
+    );
+  }
+  inlineRangeChange(event) {
+    console.log("gsads", event.target.value);
   }
 }
