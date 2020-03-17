@@ -42,10 +42,15 @@ module.exports = {
         let err = false;
         let promises = [];
         data.forEach((element) => {
-            mailOptions.to = element.email,
-                mailOptions.text = "You need to pay " + `${(element.balance)}` + " rupees",
-                mailOptions.subject = "Hi, " + `${element.name}`;
-            promises.push(transporter.sendMail(mailOptions));
+            if (element['maxPromDate']) {
+
+            } else {
+                mailOptions.to = element.email,
+                    mailOptions.text = "You need to pay " + `${(element.balance)}` + " rupees",
+                    mailOptions.subject = "Hi, " + `${element.name}`;
+                promises.push(transporter.sendMail(mailOptions));
+            }
+
         });
         return Promise.all(promises).then(data => {
             return new Promise(resolve => resolve("success"));

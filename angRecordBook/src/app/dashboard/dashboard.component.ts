@@ -214,6 +214,9 @@ export class DashboardComponent implements OnInit {
       obj["email"] = element.email;
       obj["name"] = element.name;
       obj["balance"] = element.balance;
+      if (element.maxPromDate) {
+        obj["maxPromDate"] = element.maxPromDate;
+      }
       data.push(obj);
     });
     this.service.notifieRangedCustomers(data).subscribe(
@@ -239,7 +242,7 @@ export class DashboardComponent implements OnInit {
         console.log(result);
 
         let array = [];
-        result.msg.forEach(element => {
+        result["msg"].forEach(element => {
           element.userinfo[0]["maxPromDate"] = element.maxPromDate;
           array.push(element.userinfo[0]);
         });

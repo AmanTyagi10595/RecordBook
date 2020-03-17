@@ -94,10 +94,10 @@ module.exports = {
 
     },
     groupNotifie: (req, res, next) => {
+        console.log(req.body);
         notifie.groupNotifie(req.body).then(result => {
             res.status(200).send({ msg: "Customer notified", status: "success" });
         }).catch(err => {
-            console.log()
             res.status(422).send({ msg: "Somthing wrong", status: "failure" });
         })
     },
