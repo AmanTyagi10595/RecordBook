@@ -107,20 +107,46 @@ module.exports = {
                 res.status(200).send({ status: "sucess", msg: result });
             }
         }).catch(err => {
-            res.status(400).send({ status: "failure", msg: err })
-        })
+            res.status(400).send({ status: "failure", msg: err });
+        });
     },
 
     dateRangedCustomers: (req, res, next) => {
-        console.log("running")
-        SaleRecord.find({ sale_date: { $gt: new Date(`${req.body.minValue}`) } }).then(result => {
+        console.log("running", req.body);
+        SaleRecord.aggregate(
+            [
+                { $match: { promis_date: { $gte: new Date(`${(req.body.minValue)}`), $lte: new Date(`${(req.body.maxValue)}`) } } },
+                {
+                    $group: {
+                        _id: "$email",
+                        maxPromDate: { $max: "$promis_date" }
+                    }
+                },
+                {
+                    "$lookup": {
+                        "from": "customers",
+                        "localField": "_id",
+                        "foreignField": "email",
+                        "as": "userinfo"
+                    }
+                },
+                {
+                    "$project": {
+                        "maxPromDate": 1,
+                        "userinfo": 1
+                    }
+                }
+            ]
+        ).then(result => {
             if (result) {
                 console.log("hi", result);
 
                 res.status(200).send({ status: "sucess", msg: result });
             }
         }).catch(err => {
+            console.log("errtt", err);
             res.status(400).send({ status: "failure", msg: err });
-        })
+        });
     }
+
 };

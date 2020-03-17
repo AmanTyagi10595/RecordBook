@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   modalRef: any;
   rangeNotifier: boolean = false;
   totalCustomers: any = [];
+  dateRangeNotifier = false;
   public FilesUploader: FileUploader = new FileUploader({
     url: "http://localhost:3000/saleRecord/add",
     disableMultipart: true,
@@ -65,7 +66,7 @@ export class DashboardComponent implements OnInit {
     private alerts: AlertsService
   ) {
     this.dateRange = fb.group({
-      date: [{ begin: new Date(2018, 7, 5), end: new Date(2018, 7, 25) }]
+      date: [{ begin: new Date(2020, 2, 10), end: new Date(2020, 2, 25) }]
     });
   }
 
@@ -140,6 +141,7 @@ export class DashboardComponent implements OnInit {
     this.rangeNotifier = false;
     this.service.getAllCustomer().subscribe(
       result => {
+        console.log(result);
         this.totalCustomers = result;
       },
       err => {}
@@ -205,6 +207,7 @@ export class DashboardComponent implements OnInit {
     );
   }
   notifieRangedCustomer() {
+    this.dateRangeNotifier = false;
     let data = [];
     this.totalCustomers.forEach(element => {
       let obj = {};
@@ -226,15 +229,23 @@ export class DashboardComponent implements OnInit {
     );
   }
   inlineRangeChange(event) {
-    console.log("gsads", event.target.value);
     let data = event.target.value;
     let obj = {};
-    obj["minValue"] = data.minValue;
-    obj["maxValue"] = data.maxValue;
+    obj["minValue"] = data.begin;
+    obj["maxValue"] = data.end;
 
-    this.service.dateRangedCustomers().subscribe(
+    this.service.dateRangedCustomers(obj).subscribe(
       result => {
         console.log(result);
+
+        let array = [];
+        result.msg.forEach(element => {
+          element.userinfo[0]["maxPromDate"] = element.maxPromDate;
+          array.push(element.userinfo[0]);
+        });
+        console.log(array);
+        this.totalCustomers = array;
+        this.dateRangeNotifier = true;
       },
       err => {
         console.log(err);

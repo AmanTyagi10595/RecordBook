@@ -46,7 +46,7 @@
 
   <button class="btn btn-outline-primary ml-3" (click)="open(content)">Add Customers</button>
   <button routerLink="/productSale" class="btn btn-outline-primary mr-3" style="float: right">Product Sale</button>
-  <div class="row">
+  <div class="row pt-3">
     <div class="col-4">
       <ng5-slider class="pt-3" [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (mouseup)="getRangedCustomer()"></ng5-slider>
     </div>
@@ -54,17 +54,22 @@
       <a class="btn btn-outline-danger ml-1 text-danger" (click)="notifieRangedCustomer()"> Notifie</a>
       <button class="btn btn-outline-success" (click)="getAllCustomer()">clear</button>
     </div>
-    <div class="col-4"></div>
-    <div class="col-2">
-      <form [formGroup]=dateRange>
+    <div class="col-3"></div>
+    <div class="col-5 ">
+      <form [formGroup]=dateRange class="dateselector">
         <mat-form-field>
           <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateChange)="inlineRangeChange($event)">
           <sat-datepicker #picker2 [rangeMode]="true">
           </sat-datepicker>
           <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
         </mat-form-field>
+        <button *ngIf="dateRangeNotifier" class="btn btn-outline-danger ml-1 text-danger" (click)="notifieRangedCustomer()"> Notifie</button>
       </form>
     </div>
+
+
+    <!-- <div class="col-1"></div> -->
+
     <!-- <div class="inlineCalendarContainer">
       <sat-calendar [rangeMode]="true" (dateRangesChange)="inlineRangeChange($event)" [selected]="selectedDate">
       </sat-calendar>

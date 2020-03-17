@@ -49,3 +49,6 @@ var {
 section > div {
   margin-bottom: 15px;
 }
+.dateselector {
+  /* padding-left: 33%; */
+}
