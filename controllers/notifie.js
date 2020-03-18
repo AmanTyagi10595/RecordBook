@@ -43,7 +43,10 @@ module.exports = {
         let promises = [];
         data.forEach((element) => {
             if (element['maxPromDate']) {
-
+                mailOptions.to = element.email,
+                    mailOptions.text = "You need to pay " + `${(element.balance)}` + " rupees, your last promise date was" + `${element.maxPromDate}`,
+                    mailOptions.subject = "Hi, " + `${element.name}`;
+                promises.push(transporter.sendMail(mailOptions));
             } else {
                 mailOptions.to = element.email,
                     mailOptions.text = "You need to pay " + `${(element.balance)}` + " rupees",
