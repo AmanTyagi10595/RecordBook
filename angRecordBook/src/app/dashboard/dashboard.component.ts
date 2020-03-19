@@ -286,4 +286,51 @@ export class DashboardComponent implements OnInit {
 
     doc.save("table.pdf");
   }
+
+  async generatePdf2() {
+    var doc = new jsPDF("p", "pt");
+    doc.autoTable({ margin: { top: 80 } });
+
+    var array = [];
+    await this.totalCustomers.forEach(element => {
+      let temArray = [];
+      temArray.push(element.name);
+      temArray.push(element.address);
+      temArray.push(element.mo_num);
+      temArray.push(element.balance);
+      array.push(temArray);
+    });
+    console.log("array ", array);
+
+    var header = function(data) {
+      doc.setFontSize(18);
+      doc.setTextColor(40);
+      doc.setFontStyle("normal");
+      //doc.addImage(headerImgData, 'JPEG', data.settings.margin.left, 20, 50, 50);
+      doc.text("Testing Report", data.settings.margin.left, 50);
+    };
+
+    var options = {
+      beforePageContent: header,
+      margin: {
+        top: 80
+      },
+      startY: doc.autoTableEndPosY() + 20
+    };
+
+    doc.autoTable({
+      head: [["Name", "Address", "Mobile", "Balance"]],
+      body: array,
+      // for header and footer we added didDrawPage below
+      didDrawPage: function(data) {
+        doc.setFontSize(18);
+        doc.setTextColor(40);
+        doc.setFontStyle("normal");
+        //doc.addImage(headerImgData, 'JPEG', data.settings.margin.left, 20, 50, 50);
+        doc.text("Testing Report", data.settings.margin.left, 50);
+      }
+    });
+
+    doc.save("table.pdf");
+  }
 }
