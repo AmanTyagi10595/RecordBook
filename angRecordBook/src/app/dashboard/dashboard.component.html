@@ -78,7 +78,7 @@
   <div class="container">
     <hr>
     <div class="card">
-      <table class="table table-hover shopping-cart-wrap">
+      <table class="table table-hover shopping-cart-wrap" id="my-table">
         <thead class="text-muted">
           <tr>
             <th scope="col">Name</th>
@@ -130,7 +130,7 @@
         </tbody>
       </table>
     </div> <!-- card.// -->
-
+    <button class="btn btn-primary float-right mt-1" (click)="generatePdf()">PDF</button>
   </div>
 
   <br><br>

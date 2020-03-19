@@ -7,6 +7,8 @@ import { FileUploader, FileLikeObject } from "ng2-file-upload";
 import { AlertsService } from "../services/alerts.service";
 import { Options, LabelType } from "ng5-slider";
 import Swal from "sweetalert2";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -254,5 +256,34 @@ export class DashboardComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+  generatePdf() {
+    var doc = new jsPDF("p", "pt");
+    var res = doc.autoTableHtmlToJson(document.getElementById("my-table"));
+    console.log("res", res);
+
+    var createdColumn = [res.columns[0], res.columns[1], res.columns[2]];
+    // var createdData = [res.data[0], res.data[1], res.data[2]];
+    doc.autoTable({ margin: { top: 80 } });
+
+    var header = function(data) {
+      doc.setFontSize(18);
+      doc.setTextColor(40);
+      doc.setFontStyle("normal");
+      //doc.addImage(headerImgData, 'JPEG', data.settings.margin.left, 20, 50, 50);
+      doc.text("Testing Report", data.settings.margin.left, 50);
+    };
+
+    var options = {
+      beforePageContent: header,
+      margin: {
+        top: 80
+      },
+      startY: doc.autoTableEndPosY() + 20
+    };
+
+    doc.autoTable(createdColumn, res.data, options);
+
+    doc.save("table.pdf");
   }
 }
