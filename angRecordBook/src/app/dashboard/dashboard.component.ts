@@ -257,6 +257,8 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
+  //generate PDF by getting parsing HTML Table.
   generatePdf() {
     var doc = new jsPDF("p", "pt");
     var res = doc.autoTableHtmlToJson(document.getElementById("my-table"));
@@ -286,13 +288,36 @@ export class DashboardComponent implements OnInit {
 
     doc.save("table.pdf");
   }
-
+  //Generating PDF by manualy passing dynamic data
   async generatePdf2() {
+    var base64Img = "";
+    function toDataURL(url, callback) {
+      console.log("change to base 64");
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        var reader = new FileReader();
+        reader.onloadend = function() {
+          callback(reader.result);
+        };
+        reader.readAsDataURL(xhr.response);
+      };
+      xhr.open("GET", url);
+      xhr.responseType = "blob";
+      xhr.send();
+    }
+
+    await toDataURL("https://i.picsum.photos/id/128/200/200.jpg", function(
+      dataUrl
+    ) {
+      console.log("HBJFUGHiou,joik", dataUrl);
+      base64Img = dataUrl;
+    });
+
     var doc = new jsPDF("p", "pt");
     doc.autoTable({ margin: { top: 80 } });
 
     var array = [];
-    await this.totalCustomers.forEach(element => {
+    this.totalCustomers.forEach(element => {
       let temArray = [];
       temArray.push(element.name);
       temArray.push(element.address);
@@ -301,23 +326,6 @@ export class DashboardComponent implements OnInit {
       array.push(temArray);
     });
     console.log("array ", array);
-
-    var header = function(data) {
-      doc.setFontSize(18);
-      doc.setTextColor(40);
-      doc.setFontStyle("normal");
-      //doc.addImage(headerImgData, 'JPEG', data.settings.margin.left, 20, 50, 50);
-      doc.text("Testing Report", data.settings.margin.left, 50);
-    };
-
-    var options = {
-      beforePageContent: header,
-      margin: {
-        top: 80
-      },
-      startY: doc.autoTableEndPosY() + 20
-    };
-
     doc.autoTable({
       head: [["Name", "Address", "Mobile", "Balance"]],
       body: array,
@@ -326,8 +334,48 @@ export class DashboardComponent implements OnInit {
         doc.setFontSize(18);
         doc.setTextColor(40);
         doc.setFontStyle("normal");
-        //doc.addImage(headerImgData, 'JPEG', data.settings.margin.left, 20, 50, 50);
+
+        if (base64Img) {
+          doc.addImage(
+            base64Img,
+            "JPEG",
+            data.settings.margin.left,
+            15,
+            10,
+            10
+          );
+        }
         doc.text("Testing Report", data.settings.margin.left, 50);
+      },
+      // didDwarcell is use to overwrite the table cell using sub table or image
+      // didDrawCell: function(data) {
+      //   if (data.column.dataKey === 2 && data.cell.section === "body") {
+      //     doc.autoTable({
+      //       head: [["One", "Two"]],
+      //       body: [["1", "2"]],
+      //       startY: data.cell.y + 2,
+      //       margin: { left: data.cell.x + data.cell.padding("left") },
+      //       tableWidth: "wrap",
+      //       theme: "grid",
+      //       styles: {
+      //         fontSize: 8,
+      //         cellPadding: 1
+      //       }
+      //     });
+      //   }
+      //   if (data.column.index === 1 && data.cell.section === "body") {
+      //     var td = data.cell.raw;
+      //     var img = td.getElementsByTagName("img")[0];
+      //     var dim = data.cell.height - data.cell.padding("vertical");
+      //     var textPos = data.cell.textPos;
+      //     doc.addImage(img.src, textPos.x, textPos.y, dim, dim);
+      //   }
+      // },
+      columnStyles: {
+        5: { cellWidth: 54 }
+      },
+      bodyStyles: {
+        minCellHeight: 30
       }
     });
 
