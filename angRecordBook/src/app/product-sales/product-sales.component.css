@@ -118,3 +118,6 @@ input:checked + .slider:before {
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
+.forHeight{
+  max-height: 167px;
+}

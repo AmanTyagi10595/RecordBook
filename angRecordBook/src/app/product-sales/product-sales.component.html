@@ -1,5 +1,6 @@
+<mat-progress-bar mode="indeterminate" *ngIf = "process"></mat-progress-bar>
 <div class="container" style="margin-left:16%">
-  <div class="row">
+    <div class="row">
     <div class="col-2"></div>
     <div class="container" class="col-7">
       <h2>Sale Record</h2>
@@ -74,37 +75,24 @@
         </div>
       </form>
     </div>
-    <div class="col-2" *ngIf="obj.email">
+    <div class="col-2 pt-5" *ngIf="obj.email">
       <div class="card forBox" style="width: 14rem;">
-        <img src="http://localhost:4000/Images/imgUploader_1584024467346_demo4.jpg" class="card-img-top " alt="...">
+        <img src="http://localhost:4000/Images/{{customerDetails.img_url}}" class="card-img-top  img-thumbnail forHeight img-fluid" alt="...">
         <div class="card-body ">
-          <p class="card-text">Some quick example text to build on the card title and.</p>
+         <strong><span>Address :</span></strong> <span class="card-text">{{customerDetails.address}}</span>
           <div class="card-body forStyle shopping-cart-wrap">
-            <var *ngIf="customerBalance > 0" class="card-text amount">{{customerBalance }} Jma</var>
+            <var *ngIf="customerBalance < 0" class="card-text amount">{{customerBalance }} Jma</var>
 
-            <p *ngIf=" customerBalance < 0" class="card-text"><i class="fa fa-inr"></i>{{customerBalance}} Uhar</p>
+            <p *ngIf=" customerBalance > 0" class="card-text"><i class="fa fa-inr"></i>{{customerBalance}} Uhar</p>
           </div>
         </div>
       </div>
-      <!-- <div class="card" style="width: 13rem;">
-        <svg class="bd-placeholder-img card-img-top" width="50%" height="180" src="http://localhost:4000/Images/imgUploader_1584018407153_book7.jpg" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" role="img">
-
-          <title>Placeholder</title>
-          <rect width="100%" height="100%" fill="#868e96" /><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-        </svg>
-
-        <div class="card-body forStyle shopping-cart-wrap">
-          <var *ngIf="customerBalance > 0" class="card-text amount">{{customerBalance }} Jma</var>
-
-          <p *ngIf=" customerBalance < 0" class="card-text"><i class="fa fa-inr"></i>{{customerBalance}} Uhar</p>
-        </div>
-      </div> -->
     </div>
   </div>
-  <div class="container">
-    <div class="card">
+  <div class="container ">
+    <div class="card ">
       <table class="table table-hover shopping-cart-wrap">
-        <thead class="text-muted">
+        <thead class="text-muted thead-light">
           <tr>
             <th scope="col" width="180">Image</th>
             <th scope="col" width="120">Sale Date</th>
@@ -161,7 +149,6 @@
         </tbody>
       </table>
     </div> <!-- card.// -->
-
   </div>
   <!--container end.//-->
 

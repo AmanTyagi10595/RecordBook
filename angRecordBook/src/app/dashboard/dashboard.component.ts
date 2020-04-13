@@ -9,6 +9,7 @@ import { Options, LabelType } from "ng5-slider";
 import Swal from "sweetalert2";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import * as Highcharts from 'highcharts';
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -22,6 +23,8 @@ export class DashboardComponent implements OnInit {
   rangeNotifier: boolean = false;
   totalCustomers: any = [];
   dateRangeNotifier = false;
+  showBarGraphs: boolean = false;
+  showPieGraphs: boolean = false;
   public FilesUploader: FileUploader = new FileUploader({
     url: "http://localhost:3000/saleRecord/add",
     disableMultipart: true,
@@ -143,7 +146,6 @@ export class DashboardComponent implements OnInit {
     this.rangeNotifier = false;
     this.service.getAllCustomer().subscribe(
       result => {
-        console.log(result);
         this.totalCustomers = result;
       },
       err => {}
@@ -381,4 +383,131 @@ export class DashboardComponent implements OnInit {
 
     doc.save("table.pdf");
   }
+  // to show bar graphs
+  showGraphsMethod(){ 
+   var dataObj = {
+                  name: "",
+                  y: 0,
+                  drilldown: ""
+    }
+    this.showBarGraphs = !this.showBarGraphs;
+    this.showPieGraphs = false;
+    this.totalCustomers.forEach(element => {
+      this.chartOptions1.series[0]['data'].push({name : element.name,
+        y : element.balance,
+       drilldown : element.name });
+      // console.log("run", this.chartOptions.series[0]['data'])
+    });
+ 
+  }
+  // For graphs (bar chart)
+  highcharts1 = Highcharts;
+   chartOptions1 = {   
+    chart: {
+      type: 'column'
+  },  
+  title: {
+      text: 'Browser market shares. January, 2018'
+  },
+  subtitle: {
+      text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+  },
+  accessibility: {
+      announceNewData: {
+          enabled: true
+      }
+  },
+  xAxis: {
+      type: 'category'
+  },
+  yAxis: {
+      title: {
+          text: 'Total percent shares'
+      }
+
+  },
+  legend: {
+      enabled: false
+  },
+  plotOptions: {
+      series: {
+          borderWidth: 0,
+          dataLabels: {
+              enabled: true,
+              format: '{point.y:.1f} ₹'
+          }
+      }
+  },
+
+  tooltip: {
+      headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+      pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}₹</b> of total<br/>'
+  },
+  
+  series: [
+    {
+        name: "Browsers",
+        colorByPoint: true,
+          data:
+           [                       
+          ]
+    }
+],
+   };
+
+// secon graph (Pi chart)
+showPiChart(){
+  this.chartOptions2.series[0]['data'] = []
+  this.showPieGraphs = !this.showPieGraphs;
+  this.showBarGraphs = false;
+  let totalSales =  0;
+  this.totalCustomers.forEach(e => {
+        totalSales = totalSales + e.balance
+  });
+  console.log(totalSales)
+  this.totalCustomers.forEach(element => {
+    let percent = Number(((element.balance/totalSales) * 100).toFixed(2))
+    this.chartOptions2.series[0]['data'].push({
+      name : element.name,
+      y: percent
+ });
+  });
+}
+
+highcharts2 = Highcharts;
+chartOptions2 = {  
+  chart: {
+         plotBackgroundColor: null,
+         plotBorderWidth: null,
+         plotShadow: false,
+         type: 'pie'
+     },
+     title: {
+         text: 'Browser market shares in January, 2018'
+     },
+     tooltip: {
+         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+     },
+     accessibility: {
+         point: {
+             valueSuffix: '%'
+         }
+     },
+     plotOptions: {
+         pie: {
+             allowPointSelect: true,
+             cursor: 'pointer',
+             dataLabels: {
+                 enabled: true,
+                 format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+             }
+         }
+     },
+     series: [{
+         name: 'Brands',
+         colorByPoint: true,
+         data: []
+     }],
+       }
+      
 }

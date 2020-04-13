@@ -26,8 +26,12 @@
     "dotenv": "^8.2.0",
     "express": "^4.14.1",
     "jsonwebtoken": "^8.5.1",
+    "jspdf": "^1.5.3",
     "mongoose": "^4.8.4",
     "multer": "^1.4.2",
-    "nodemailer": "^6.4.5"
+    "ng2-file-upload": "^1.4.0",
+    "ng5-slider": "^1.2.4",
+    "nodemailer": "^6.4.5",
+    "saturn-datepicker": "^8.0.5"
   }
 }

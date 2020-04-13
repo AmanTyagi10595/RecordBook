@@ -27,6 +27,11 @@ export class ProductSalesComponent implements OnInit {
   minDate: any;
   customerBalance: number;
   selectedFile: File;
+  process = true;
+  customerDetails = {
+    img_url :"",
+    address : ""
+};
   public FilesUploader: FileUploader = new FileUploader({
     url: "http://localhost:3000/saleRecord/add",
     disableMultipart: true,
@@ -63,8 +68,11 @@ export class ProductSalesComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
+      this.process = true;
       if (params && params.email) {
         console.log("params", params);
+        this.customerDetails.img_url = params.img_url;
+        this.customerDetails.address = params.address
         this.obj.email = params.email;
         this.saleRecord.patchValue({
           email: params.email
@@ -82,12 +90,14 @@ export class ProductSalesComponent implements OnInit {
   getOneUserSale() {
     this.service.getOneUserSale(this.obj).subscribe(result => {
       this.oneCustomerSale = result["msg"];
+      this.process = false;
     });
   }
   getAllUsersSale() {
     this.service.getAllUsersSale().subscribe(result => {
       this.oneCustomerSale = result["msg"];
       console.log("input data", this.oneCustomerSale);
+      this.process = false;
     });
   }
   onAddSale() {

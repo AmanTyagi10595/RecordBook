@@ -13,19 +13,22 @@ import { HttpClientModule } from "@angular/common/http";
 import { ProductSalesComponent } from "./product-sales/product-sales.component";
 // import { MatFormFieldModule } from "@angular/material/form-field";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { Ng5SliderModule } from "ng5-slider";
+import { Ng5SliderModule } from "ng5-slider";                 
 import {
   MatFormFieldModule,
   MatInputModule,
   MatDatepickerModule,
   MatAutocompleteModule,
   MatNativeDateModule,
-  MatButtonModule
+  MatButtonModule,
+  MatProgressBarModule
 } from "@angular/material";
 import { AlertsService } from "./services/alerts.service";
 import { UploadfilesService } from "./services/uploadfiles.service";
 import { FileUploadModule } from "ng2-file-upload";
 import { SatDatepickerModule, SatNativeDateModule } from "saturn-datepicker";
+import { HighchartsChartComponent } from 'highcharts-angular';
+import { TestComponent } from './test/test.component';
 // import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 @NgModule({
@@ -34,7 +37,9 @@ import { SatDatepickerModule, SatNativeDateModule } from "saturn-datepicker";
     HeaderComponent,
     SidebarComponent,
     DashboardComponent,
-    ProductSalesComponent
+    ProductSalesComponent,
+    HighchartsChartComponent,
+    TestComponent
   ],
   imports: [
     NgbModule,
@@ -53,7 +58,8 @@ import { SatDatepickerModule, SatNativeDateModule } from "saturn-datepicker";
     Ng5SliderModule,
     MatButtonModule,
     SatDatepickerModule,
-    SatNativeDateModule
+    SatNativeDateModule,
+    MatProgressBarModule
   ],
   providers: [AlertsService, UploadfilesService],
   bootstrap: [AppComponent]
