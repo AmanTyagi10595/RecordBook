@@ -29,6 +29,9 @@ import { FileUploadModule } from "ng2-file-upload";
 import { SatDatepickerModule, SatNativeDateModule } from "saturn-datepicker";
 import { HighchartsChartComponent } from 'highcharts-angular';
 import { TestComponent } from './test/test.component';
+import { YouTubePlayerModule } from "@angular/youtube-player";
+import { VgCoreModule } from 'videogular2/compiled/core';
+import { VgControlsModule } from 'videogular2/compiled/controls';
 // import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 @NgModule({
@@ -59,7 +62,10 @@ import { TestComponent } from './test/test.component';
     MatButtonModule,
     SatDatepickerModule,
     SatNativeDateModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    YouTubePlayerModule,
+    VgCoreModule,
+    VgControlsModule
   ],
   providers: [AlertsService, UploadfilesService],
   bootstrap: [AppComponent]

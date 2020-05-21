@@ -11,5 +11,7 @@ export class TestComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  onAddCustomers(){
+    console.log("HIIII")
+  }
 }

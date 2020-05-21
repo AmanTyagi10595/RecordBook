@@ -1,50 +1,63 @@
 <div class="container" style="margin-left:16%">
-
-  <ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form [formGroup]="profileForm">
-        <div class="row form-group">
-          <label class="col-6"> 
-            Name:
-            <input type="text" class="form-control" formControlName="name">
-            <!-- <small *ngIf="profileForm.get('name') && profileForm.get('name').errors" class="text-danger">Name Required</small> -->
-          </label>
-
-          <label class="col-6">
-            Mobile:
-            <input type="number" class="form-control" formControlName="mobile">
-          </label>
-          <small *ngIf="profileForm.get('mobile').errors" class="text-danger">Mobile should be of 10 digits</small>
-        </div>
-        <div class="row form-group">
-          <label class="col-6">
-            Address:
-            <input type="text" class="form-control" formControlName="address">
-          </label>
-          <label class="col-6">
-            Email:
-            <input type="text" class="form-control" formControlName="email">
-          </label>
-          <div *ngIf="! profileForm.get('email')">
-            <small *ngIf="profileForm.get('email').errors.required" class="text-danger">Email is required</small>
-            <small *ngIf="profileForm.get('email').errors.email" class="text-danger">Invalid Email</small>
+   <div class="container"> 
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Add Customer</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
-          <input class="form-control" type="file" ng2FileSelect [uploader]="FilesUploader" multiple (change)="myFiles()" />
+          
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form [formGroup]="profileForm">
+              <div class="row form-group">
+                <label class="col-6"> 
+                  Name:
+                  <input type="text" class="form-control" formControlName="name">
+                  <!-- <small *ngIf="profileForm.get('name') && profileForm.get('name').errors" class="text-danger">Name Required</small> -->
+                </label>
+      
+                <label class="col-6">
+                  Mobile:
+                  <input type="number" class="form-control" formControlName="mobile">
+                </label>
+                <small *ngIf="profileForm.get('mobile').errors" class="text-danger">Mobile should be of 10 digits</small>
+              </div>
+              <div class="row form-group">
+                <label class="col-6">
+                  Address:
+                  <input type="text" class="form-control" formControlName="address">
+                </label>
+                <label class="col-6">
+                  Email:
+                  <input type="text" class="form-control" formControlName="email">
+                </label>
+                <div *ngIf="! profileForm.get('email')">
+                  <small *ngIf="profileForm.get('email').errors.required" class="text-danger">Email is required</small>
+                  <small *ngIf="profileForm.get('email').errors.email" class="text-danger">Invalid Email</small>
+                </div>
+                <input class="form-control" type="file" ng2FileSelect [uploader]="FilesUploader" multiple (change)="myFiles()" />
+              </div>
+            </form>
+          </div>
+          
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onAddCustomers()">Save</button>
+          </div>
+          
         </div>
-      </form>
+      </div>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click'); onAddCustomers()">Save</button>
-    </div>
-  </ng-template>
-
-  <button class="btn btn-outline-primary ml-3" (click)="open(content)">Add Customers</button>
+    
+  </div>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Add Customers
+  </button>
   <button routerLink="/productSale" class="btn btn-outline-primary mr-3" style="float: right">Product Sale</button>
   <div class="row pt-3">
     <div class="col-4">
@@ -137,6 +150,7 @@
     <button class="btn btn-primary float-left mt-2 mr-1" (click)="showPiChart()">Show PieGraph</button>
     <button class="btn btn-primary float-right mt-2" (click)="generatePdf()">PDF</button>
     <button class="btn btn-primary float-right mt-2 mr-1" (click)="generatePdf2()">PDF2</button>
+    <button class="glow-on-hover float-right mt-2 mr-1" type="button" (click)= "demo = !demo">Show Demo</button>
   </div>
  
   <br><br>
@@ -162,3 +176,13 @@
       information about the individual slices.
   </p>
 </figure>
+<div class = "playerSetting" *ngIf  = "demo">
+<youtube-player 
+  videoId="IqRLCLaiwKs" 
+  suggestedQuality="highres" 
+  [height]="250" 
+  [width]="500" 
+  [startSeconds]="'4'"
+  [endSeconds]="8">
+</youtube-player>
+</div>

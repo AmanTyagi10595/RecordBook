@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   dateRangeNotifier = false;
   showBarGraphs: boolean = false;
   showPieGraphs: boolean = false;
+  demo:boolean = false;
   public FilesUploader: FileUploader = new FileUploader({
     url: "http://localhost:3000/saleRecord/add",
     disableMultipart: true,
