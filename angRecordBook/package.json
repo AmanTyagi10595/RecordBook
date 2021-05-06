@@ -24,7 +24,7 @@
     "@angular/youtube-player": "^9.2.1",
     "@ng-bootstrap/ng-bootstrap": "^6.0.0",
     "angular-material-datepicker": "^1.0.2",
-    "highcharts": "^8.0.4",
+    "highcharts": "^9.0.0",
     "highcharts-angular": "^2.4.0",
     "jspdf": "^1.5.3",
     "jspdf-autotable": "^3.2.15",
